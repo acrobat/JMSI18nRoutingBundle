@@ -272,13 +272,14 @@ class I18nRouterTest extends \PHPUnit_Framework_TestCase
         $context = $router->getContext();
         $context->setParameter('_locale', null);
 
+        $request = Request::create('/');
         $ref = new \ReflectionProperty($router, 'container');
         $ref->setAccessible(true);
         $container = $ref->getValue($router);
         if (!method_exists('Symfony\Component\DependencyInjection\Definition', 'setShared')) {
             $container->addScope(new Scope('request'));
             $container->enterScope('request');
-            $container->set('request', $request = Request::create('/'));
+            $container->set('request', $request);
         }
 
 
